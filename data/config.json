@@ -1,0 +1,7 @@
+{
+    "Use_Proxy": "y",
+    "Threads": 20,
+
+    "discordInteraction": false,
+    "discordWebhook": ""
+}
