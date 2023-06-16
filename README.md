@@ -20,6 +20,7 @@ Generator uses Spotify's public API
 If you need help or anything do not hesitate to enter: discord.gg/TAbypuWDmw
 
 This tool is made for educational purposes, I am not responsible for damages.
+  
 Please leave a star ;)
 </h4>
 
