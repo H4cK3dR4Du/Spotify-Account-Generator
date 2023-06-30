@@ -2,6 +2,10 @@
     "Use_Proxy": "y",
     "Threads": 20,
 
+    "Username": "",
+    "Email_Names": "",
+    "Password": "",
+
     "discordInteraction": false,
     "discordWebhook": ""
 }
