@@ -71,22 +71,46 @@ def getBirthday():
         return birthday
 
 def generate_email():
-    username = ''.join(random.choices(string.ascii_lowercase + string.digits, k=17))
-    domain = "gmail.com"
-    email = f"{username}@{domain}"
-    return email
+    with open("data/config.json") as file:
+        data = json.load(file)
+        gen = data['Email_Names']
+        if gen == "" or gen == " ":
+            gen = ''.join(random.choices(string.ascii_lowercase + string.digits, k=17))
+            domain = "gmail.com"
+            email = f"{gen}@{domain}"
+            return email
+        else:
+            domain = "gmail.com"
+            email = f"{gen}@{domain}"
+            return email
 
 def generate_username():
-    username = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
-    names = ["Radu loves Spotify", "yx1337 is cool", "radutool", "PussyKill", "Big fat cock", "h4ck3dr4du", "yx1337", "imagine genned", "spotifai", "cool gen - radu / yx", "yx is cool", "radu is cool", "very big cock", "fat cock", "penis", "pizda cu chapa"]
-    name = choice(names)
-    user = username + " | " + name
-    username = user
-    return username
+    with open("data/config.json") as file:
+        data = json.load(file)
+        usernames = data['Username']
+        if usernames == "" or usernames == " ":
+            username = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
+            names = ["Radu loves Spotify", "yx1337 is cool", "radutool", "PussyKill", "Big fat cock", "h4ck3dr4du", "yx1337", "imagine genned", "spotifai", "cool gen - radu / yx", "yx is cool", "radu is cool", "very big cock", "fat cock", "penis", "pizda cu chapa"]
+            name = choice(names)
+            user = username + " | " + name
+            username = user
+            return username
+        else:
+            username = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
+            user = usernames + " | " + username
+            username = user
+            return username
 
 def generate_password():
-    password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
-    return password
+    with open("data/config.json") as file:
+        data = json.load(file)
+        check_pass = data['Password']
+        if check_pass == "" or check_pass == " ":
+            password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
+            return password
+        else:
+            password = check_pass
+            return password
 
 def getAvatar():
     avatars = ["images-75.jpg", "images-76.jpg", "images-77.jpg", "images-78.jpg", "images-79.jpg", "images-80.jpg", "images-81.jpg", "images-82.jpg", "images-83.jpg", "images-84.jpg", "images-85.jpg", "images-86.jpg", "images-87.jpg", "images-88.jpg", "images-89.jpg", "images-90.jpg", "images-91.jpg"]
