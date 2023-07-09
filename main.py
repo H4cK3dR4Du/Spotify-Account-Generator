@@ -33,20 +33,21 @@ from json import dumps
 from uuid import uuid4
 from random import choice, choices, randint
 from datetime import datetime
-red = fg(1)
-purple = fg(5)
-yellow = fg(226)
-green = fg(2)
-nothing = fg(7)
-dark_blue = fg(4)
-gray = fg(8)
-blue = fg(6)
-pink = fg(216)
+from colorama import Fore
+red = Fore.RED
+purple = Fore.MAGENTA
+yellow = Fore.YELLOW
+green = Fore.GREEN
+nothing = Fore.RESET
+dark_blue = Fore.BLUE
+gray = Fore.LIGHTBLACK_EX
+blue = Fore.BLUE
+pink = Fore.LIGHTMAGENTA_EX
 
 madeAccounts = 0
 failed_accs = 0
 proxy_error = 0
-
+    
 def run_account_creation(session):
     while True:
         try:
@@ -142,8 +143,7 @@ def check_if_proxy():
 
 def client_token(session):
     session = check_if_proxy()
-    while True:
-        try:
+    try:
             payload = {
                 "client_data": {
                     "client_id": "d8a5ed958d274c2e8ee717e6a4b0971d",
@@ -176,17 +176,14 @@ def client_token(session):
             response = session.post(url='https://clienttoken.spotify.com/v1/clienttoken', headers=headers, json=payload)
             if response.status_code == 200:
                 current_time = get_current_time()
-                print(f"{current_time}{green} Generator{nothing} > {blue}Successfully Got {yellow}Client{blue} Token{nothing}")
                 return response.json()['granted_token']['token']
             else:
-                print(f"{current_time}{red} Failed{nothing} > {blue}Error Getting {yellow}Client{blue} Token{nothing}")
                 pass
-        except requests.exceptions.RequestException as e:
+    except requests.exceptions.RequestException as e:
             pass
 def get_csrf(session):
     session = check_if_proxy()
-    while True:
-        headers = {
+    headers = {
             "Host": "www.spotify.com",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/110.0",
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
@@ -199,20 +196,17 @@ def get_csrf(session):
             "Sec-Fetch-Site": "none",
             "Sec-Fetch-User": "?1",
             "TE": "trailers"
-        }
-        current_time = get_current_time()
-        response = session.get(url='https://www.spotify.com/us/signup', headers=headers)
-        if response.status_code == 200:
-            print(f"{current_time}{green} Generator{nothing} > {blue}Successfully Got {yellow}Csrf{blue} Token{nothing}")
-            return response.text.split('csrfToken')[1].split('"')[2]
-        else:
-            print(f"{current_time}{red} Failed{nothing} > {blue}Error Getting {yellow}Csrf{blue} Token{nothing}")
-            break
+    }
+    current_time = get_current_time()
+    response = session.get(url='https://www.spotify.com/us/signup', headers=headers)
+    if response.status_code == 200:
+        return response.text.split('csrfToken')[1].split('"')[2]
+    else:
+        pass
 
 def get_token(login_token):
     session = check_if_proxy()
-    while True:
-        headers = {
+    headers = {
             "Host": "www.spotify.com",
             "Accept": "*/*",
             "Accept-Language": "tr-TR,tr;q=0.8,en-US;q=0.5,en;q=0.3",
@@ -228,9 +222,9 @@ def get_token(login_token):
             "Sec-Fetch-Mode": "cors",
             "Sec-Fetch-Site": "same-origin",
             "TE": "trailers"
-        }
-        response = session.post(url='https://www.spotify.com/api/signup/authenticate', headers=headers, data=f'splot={login_token}')
-        if response.status_code == 200:
+    }
+    response = session.post(url='https://www.spotify.com/api/signup/authenticate', headers=headers, data=f'splot={login_token}')
+    if response.status_code == 200:
             headers = {
                 "Accept": "application/json",
                 "Accept-Encoding": "gzip, deflate, br",
@@ -247,16 +241,17 @@ def get_token(login_token):
                 "Sec-Fetch-User": "?1",
                 "TE": "trailers"
             }
-            current_time = get_current_time()
             response2 = session.get(url='https://open.spotify.com/get_access_token?reason=transport&productType=web_player', headers=headers)
             if response2.status_code == 200:
+                current_time = get_current_time()
                 print(f"{current_time}{green} Generator{nothing} > {blue}Successfully Got {yellow}Spotify{blue} Token{nothing}")
                 return response2.json()['accessToken']
             else:
+                current_time = get_current_time()
                 print(f"{current_time}{red} Failed{nothing} > {blue}Error Getting {yellow}Spotify{blue} Token{nothing}")
-                break
-        else:
-            continue
+                pass
+    else:
+        pass
 
 def generate_account(session, token, csrf):
     global madeAccounts
@@ -318,14 +313,30 @@ def generate_account(session, token, csrf):
     except requests.exceptions.RequestException as e:
         pass
     if response.status_code == 200 and 'success' in response.text:
+        current_time = get_current_time()
         print(f"{current_time}{dark_blue} Generated{nothing} > {blue}Email : {yellow}{gmail}{nothing} | {blue}Pass : {yellow}{password[:10]}*{nothing} | {blue}User : {yellow}{username}{nothing}")
         print(f"{current_time}{yellow} Credentials{nothing} > {blue}Created Email {nothing}| {yellow}{gmail}{nothing}")
         print(f"{current_time}{yellow} Credentials{nothing} > {blue}Created Password {nothing}| {yellow}{password}{nothing}")
         print(f"{current_time}{yellow} Credentials{nothing} > {blue}Created Date-Of-Birth {nothing}| {yellow}{birthday}{nothing}")
         print(f"{current_time}{yellow} Credentials{nothing} > {blue}Created Username {nothing}| {yellow}{username}{nothing}")
         print(f"{current_time}{pink} Client Token{nothing} > {pink}{c_token[:60]}********{nothing}")
+        with open("data/config.json") as carlos:
+            data = json.load(carlos)
+            interact = data.get("discordInteraction")
+            if interact == "y":
+                with open("data/config.json") as carlos:
+                    data = json.load(carlos)
+                    hook = data.get("discordWebhook")
+                    msg = f"```Gmail : {gmail}\nPassword : {password}```"
+                    ms_data = {
+                        "content": msg
+                    }
+                    r = requests.post(hook, data=ms_data)
+                    if r.status_code == 200 or r.status_code == 201 or r.status_code == 204:
+                        current_time = get_current_time()
+                        print(f"{nothing}{current_time}{dark_blue} Sent Account {nothing}> {blue}{hook[:60]}*******")
         with open('Results/accounts.txt', 'a', encoding='utf-8') as f:
-            f.write(f"Gmail : {gmail} | Password : {password} | Generated By H4cK3dR4Du & yx1337 Spotify Generator\n")
+            f.write(f"Gmail : {gmail} | Password : {password} | Generated By H4cK3dR4Du Spotify Account Generator\n")
             print(f"{current_time}{green} Account Saver{nothing} > {blue}Saved Account {green}Successfully{nothing}")
         madeAccounts += 1
         account_id = response.json()['success']['username']
@@ -333,8 +344,10 @@ def generate_account(session, token, csrf):
         token = get_token(login_token)
     elif 'VPN' in response.text:
         try:
+            current_time = get_current_time()
             print(f"{current_time}{red} Failed{nothing} > {blue}Ratelimit{nothing}")
         except UnboundLocalError:
+            current_time = get_current_time()
             print(f"{current_time}{red} Failed{nothing} > {blue}Ratelimit{nothing}")
     else:
         pass
