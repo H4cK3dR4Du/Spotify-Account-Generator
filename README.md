@@ -44,12 +44,13 @@ Please leave a star ;)
 - Generates Approximately 250-550 Accounts Per Minute With High Threads (150-250 Threads)
 - Add PFP
 - Saves All Accounts
+- Discord Interaction (Webhook)
 
 ---
 
 ### ❗ Upcoming updates ❗
 
 - ⭐ `10 Stars` ---> Custom Username, Email & Password Account Generator ( ✅ )
-- ⭐ `20 Stars` ---> Email Verified Account Generator ( ❌ )
+- ⭐ `20 Stars` ---> Email Verified Account Generator ( ✅ )
 - ⭐ `35 Stars` ---> Auto Follower To Playlists / Artists + Humanized Accounts ( ❌ )
 - ⭐ `150 Stars` ---> All Options + Premium Account Generator ( ❌ )
