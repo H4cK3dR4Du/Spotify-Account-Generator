@@ -52,5 +52,3 @@ Please leave a star ;)
 
 - ⭐ `10 Stars` ---> Custom Username, Email & Password Account Generator ( ✅ )
 - ⭐ `20 Stars` ---> Email Verified Account Generator ( ✅ )
-- ⭐ `35 Stars` ---> Auto Follower To Playlists / Artists + Humanized Accounts ( ❌ )
-- ⭐ `150 Stars` ---> All Options + Premium Account Generator ( ❌ )
