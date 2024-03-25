@@ -17,7 +17,7 @@ Publish Date:
 16/06/2023
 Generator uses Spotify's public API
 
-If you need help or anything do not hesitate to enter: discord.gg/TAbypuWDmw
+If you need help or anything do not hesitate to enter: discord.gg/raducord
 
 This tool is made for educational purposes, I am not responsible for damages.
   
